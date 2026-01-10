@@ -9,7 +9,7 @@ class Welcome(commands.Cog):
             "Chào mừng {member} đến với tiệm Pizza gọi pizza dứa hoặc bị doot deet <a:kcsalami:1457413393366384869> ",
             "Rất vui được gặp bro, {member}! Hy vọng bro sẽ thích pizza dứa ở đây<:cheemthanhlich:1443896875127144448> ",
             "Hãy cứ là chính mình nhé, {member}! Dù bro có là Fembi thì ae Pizza vẫn luôn chào đón bro <:ChisaScary:1451015932376776845> ",
-            "Này {member}, qua đây doot deet đê <a:kcsalami:1457413393366384869>",
+            "Này {member}, qua đây doot deet đê <a:kcsalami:1457413393366384869>"
         ]
 
     @commands.Cog.listener()
