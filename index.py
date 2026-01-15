@@ -24,9 +24,14 @@ class MyBot(commands.Bot):
         # Tự động load tất cả các file .py trong thư mục cogs
         for filename in os.listdir('./cogs'):
             if filename.endswith('.py'):
+                extension_name = f'cogs.{filename[:-3]}'
                 try:
-                    await self.load_extension(f'cogs.{filename[:-3]}')
+                    await self.load_extension(extension_name)
                     print(f"Đã load extension: {filename}")
+                except commands.ExtensionAlreadyLoaded:
+                    # Nếu extension đã được load, reload thay vì load lại
+                    await self.reload_extension(extension_name)
+                    print(f"Đã reload extension: {filename}")
                 except Exception as e:
                     print(f"Không thể load {filename}: {e}")
     
