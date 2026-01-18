@@ -176,7 +176,7 @@ class OrderSystem(commands.Cog):
         guide_text = (
             "📋 **HƯỚNG DẪN** 🎮\n"
             "✅ Đây là kênh cứu tháp, thuyền và các content endgame Wuwa của tiệm Pizza\n"
-            "✅ Hãy bấm vào order đề gửi order cứu acc nhé \"Order\"\n\n"
+            "✅ Hãy bấm vào order đề gửi order cứu acc nhé\n\n"
             "⚠️ **XIN LƯU Ý** 🎮\n"
             "❗ Hãy cung cấp hiện trạng sơ bộ acc của bạn\n"
             "❗ Không cung cấp tài khoản/mật khẩu trong sever này!!"
