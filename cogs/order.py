@@ -81,6 +81,9 @@ class AcceptOrderView(View):
 
     @discord.ui.button(label="Nhận Order", style=discord.ButtonStyle.green, emoji="✅")
     async def accept_order(self, interaction: discord.Interaction, button: Button):
+        if not self.has_staff_role(interaction.user):
+            await interaction.response.send_message("Chỉ có Cooker mới có thể nhận Order", ephemeral=True)
+            return
 
         self.accepted = True
         self.accepted_by = interaction.user.id
@@ -92,7 +95,7 @@ class AcceptOrderView(View):
             self.add_item(item)
 
         await interaction.response.edit_message(view=self)
-        await interaction.channel.send(f"👌🏿 <@{interaction.user.id}> đã nhận order từ <@{self.order_user_id}>! Vui lòng chờ xử lý.")
+        await interaction.channel.send(f"👌🏿 Cooker <@{interaction.user.id}> đã nhận order từ <@{self.order_user_id}>! Hãy cung cấp thông tin cụ thể acc của bạn để Cooker nắm rõ tình hình.")
 
 
 class CompleteOrderView(View):
@@ -125,7 +128,7 @@ class CompleteOrderView(View):
         if success:
             await interaction.channel.send(f"👌🏿 <@{self.order_user_id}> Order đã được xử lý: **Cứu thành công**\n\nKênh sẽ bị xóa sau 5 giây...")
         else:
-            await interaction.channel.send(f"<@{self.order_user_id}> 😔 Acc này hết cứu rút ống thở thôi.\n\nKênh sẽ bị xóa sau 5 giây...")
+            await interaction.channel.send(f"<@{self.order_user_id}> 💀 Acc này hết cứu rút ống thở thôi.\n\nKênh sẽ bị xóa sau 5 giây...")
 
         await asyncio.sleep(5)
         
@@ -172,11 +175,11 @@ class OrderSystem(commands.Cog):
 
         guide_text = (
             "📋 **HƯỚNG DẪN** 🎮\n"
-            "✅ Đây là kênh cứu tháp của tiệm Pizza\n"
-            "✅ Hãy bấm vào order để đăng kí cứu acc nhé \"Order\"\n\n"
+            "✅ Đây là kênh cứu tháp, thuyền và các content endgame Wuwa của tiệm Pizza\n"
+            "✅ Hãy bấm vào order đề gửi order cứu acc nhé \"Order\"\n\n"
             "⚠️ **XIN LƯU Ý** 🎮\n"
             "❗ Hãy cung cấp hiện trạng sơ bộ acc của bạn\n"
-            "❗ Không cung cấp tài khoản/mật khẩu trong sever này"
+            "❗ Không cung cấp tài khoản/mật khẩu trong sever này!!"
         )
 
         embed.description = guide_text
