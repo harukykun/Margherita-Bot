@@ -8,11 +8,7 @@ from discord.ext import commands
 
 URL_REGEX = re.compile(r'https?://[^\s<>"\']+')
 YOUTUBE_REGEX = re.compile(r'(youtube\.com|youtu\.be)', re.IGNORECASE)
-
-GIF_REGEX = re.compile(
-    r'(tenor\.com|giphy\.com|\.gif(\?|$))',
-    re.IGNORECASE,
-)
+GIF_REGEX = re.compile(r'(tenor\.com|giphy\.com|\.gif(\?|$))', re.IGNORECASE)
 
 VIDEO_EXTENSIONS = ('.mp4', '.webm', '.mov', '.avi', '.mkv', '.flv')
 
@@ -44,15 +40,6 @@ class VideoLink(commands.Cog):
 
     def _is_youtube(self, url: str) -> bool:
         return bool(YOUTUBE_REGEX.search(url))
-
-    def _is_gif(self, url: str) -> bool:
-        return bool(GIF_REGEX.search(url))
-
-    def _is_discord_embeddable(self, url: str) -> bool:
-        return bool(DISCORD_EMBEDDABLE_REGEX.search(url))
-
-    def _should_skip(self, url: str) -> bool:
-        return self._is_youtube(url) or self._is_gif(url) or self._is_discord_embeddable(url)
 
     async def _check_direct_video(self, session: aiohttp.ClientSession, url: str) -> bool:
         try:
@@ -149,7 +136,7 @@ class VideoLink(commands.Cog):
         if not urls:
             return
 
-        non_yt_urls = [u for u in urls if not self._should_skip(u)]
+        non_yt_urls = [u for u in urls if not self._is_youtube(u) and not GIF_REGEX.search(u)]
         if not non_yt_urls:
             return
 
