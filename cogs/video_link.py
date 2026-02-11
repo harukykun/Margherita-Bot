@@ -7,8 +7,10 @@ import yt_dlp
 from discord.ext import commands
 
 URL_REGEX = re.compile(r'https?://[^\s<>"\']+')
-YOUTUBE_REGEX = re.compile(r'(youtube\.com|youtu\.be)', re.IGNORECASE)
-GIF_REGEX = re.compile(r'(tenor\.com|giphy\.com|\.gif(\?|$))', re.IGNORECASE)
+SUPPORTED_DOMAINS = re.compile(
+    r'(facebook\.com|fb\.watch|fb\.com|twitter\.com|x\.com|reddit\.com|redd\.it)',
+    re.IGNORECASE,
+)
 
 VIDEO_EXTENSIONS = ('.mp4', '.webm', '.mov', '.avi', '.mkv', '.flv')
 
@@ -38,8 +40,8 @@ class VideoLink(commands.Cog):
             return 25 * 1024 * 1024
         return MAX_FILE_SIZE.get(guild.premium_tier, 25 * 1024 * 1024)
 
-    def _is_youtube(self, url: str) -> bool:
-        return bool(YOUTUBE_REGEX.search(url))
+    def _is_supported(self, url: str) -> bool:
+        return bool(SUPPORTED_DOMAINS.search(url))
 
     async def _check_direct_video(self, session: aiohttp.ClientSession, url: str) -> bool:
         try:
@@ -136,15 +138,15 @@ class VideoLink(commands.Cog):
         if not urls:
             return
 
-        non_yt_urls = [u for u in urls if not self._is_youtube(u) and not GIF_REGEX.search(u)]
-        if not non_yt_urls:
+        supported_urls = [u for u in urls if self._is_supported(u)]
+        if not supported_urls:
             return
 
         max_size = self._get_max_size(message.guild)
 
         async with message.channel.typing():
             async with aiohttp.ClientSession() as session:
-                for url in non_yt_urls[:3]:
+                for url in supported_urls[:3]:
                     try:
                         is_direct = await self._check_direct_video(session, url)
 
