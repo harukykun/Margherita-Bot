@@ -7,9 +7,7 @@ class Welcome(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.welcome_messages = [
-            "Chào mừng {member} đến với tiệm Pizza gọi pizza dứa hoặc bị doot deet <a:kcsalami:1457413393366384869> ",
-            "Rất vui được gặp bro, {member}! Hy vọng bro sẽ thích pizza dứa ở đây<:cheemthanhlich:1443896875127144448> ",
-            "Hãy cứ là chính mình nhé, {member}! Dù bro có là Fembi thì ae Pizza vẫn luôn chào đón bro <:ChisaScary:1451015932376776845> ",
+            "Chào mừng {member} đến với tiệm Pizza. Chúc cậu có những thời gian vui vẻ tại đây ha<a:miku12:1473651020637798680> . Hãy cứ thoải mái trò chuyện tại đây nhé. Nếu có thắc mắc gì thì hãy hỏi nhé. Đừng ngần ngại mọi người không cắn đâu<:cheemthanhlich:1443896875127144448> ",
         ]
 
         self.welcome_times = {}
