@@ -65,7 +65,15 @@ class OrderModal(Modal):
             required=True,
             max_length=1000
         )
+        self.play_time = TextInput(
+            label="Thời gian thường xuyên vào game",
+            style=discord.TextStyle.short,
+            placeholder="VD: 18h-22h hàng ngày, trưa 12h-14h,...",
+            required=True,
+            max_length=200
+        )
         self.add_item(self.account_status)
+        self.add_item(self.play_time)
 
     async def on_submit(self, interaction: discord.Interaction):
         try:
@@ -103,6 +111,7 @@ class OrderModal(Modal):
         )
         order_embed.add_field(name="Người Order", value=f"{interaction.user.mention} ({interaction.user.display_name})", inline=False)
         order_embed.add_field(name="Hiện Trạng Account", value=self.account_status.value, inline=False)
+        order_embed.add_field(name="Thời Gian Thường Vào Game", value=self.play_time.value, inline=False)
         order_embed.set_footer(text=f"User ID: {interaction.user.id}")
         order_embed.timestamp = discord.utils.utcnow()
 
